@@ -1,4 +1,5 @@
 import logging
+import argparse
 from telegram import __version__ as TG_VER
 
 try:
@@ -42,11 +43,16 @@ async def echo(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """Echo the user message."""
     await update.message.reply_text(update.message.text)
 
+def parse_args():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--token', type=str, required=True)
+    return parser.parse_args()
 
 def main() -> None:
     """Start the bot."""
     # Create the Application and pass it your bot's token.
-    application = Application.builder().token("TOKEN").build()
+    args = parse_args()
+    application = Application.builder().token(args.token).build()
 
     # on different commands - answer in Telegram
     application.add_handler(CommandHandler("start", start))
@@ -57,6 +63,7 @@ def main() -> None:
 
     # Run the bot until the user presses Ctrl-C
     application.run_polling()
+
 
 
 if __name__ == "__main__":
