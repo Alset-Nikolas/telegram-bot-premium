@@ -1,1 +1,3 @@
 telegram-premium/secrets/*
+.vscode
+env/*
